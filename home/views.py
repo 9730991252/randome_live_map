@@ -26,8 +26,7 @@ def produce_lat_lon(request):
                 LAT_LON_KAFKA_TOPIC,
                 json.dumps(data).encode("utf-8")
             )
-        producer.flush()
-    return JsonResponse({'status': 'status'})
+    return JsonResponse({'latitude': 'status'})
 
 
 def data(request):
