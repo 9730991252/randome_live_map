@@ -16,7 +16,7 @@ def produce_lat_lon(request):
         
         LAT_LON_KAFKA_TOPIC = "self_lat_lon"
         
-        producer = KafkaProducer(bootstrap_servers="localhost:9092")
+        producer = KafkaProducer(bootstrap_servers="103.150.136.82:9092")
         
         data = {
             "latitude": lat,
@@ -29,21 +29,11 @@ def produce_lat_lon(request):
     return JsonResponse({'status': 'status'})
 
 
-
-
-
-
-
-
-
-
-
-
 def data(request):
     LAT_LON_KAFKA_TOPIC = "self_lat_lon"
     consumer = KafkaConsumer(
         LAT_LON_KAFKA_TOPIC, 
-        bootstrap_servers="localhost:9092"
+        bootstrap_servers="103.150.136.82:9092"
     )
     consumed_message = []
     for m in consumer:

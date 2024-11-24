@@ -22,7 +22,9 @@ exit
 _______________________________________
 
 
-git clone https://github.com/9730991252/map.git
+git clone https://github.com/9730991252/randome_live_map.git
+
+mv randome_live_map map
 
 _______________________________________
 ********** Create Virtual env *****
@@ -35,10 +37,8 @@ source venv/bin/activate
 
 ************************************
 
-pip install num2words
+pip install -r requirements.txt
 
-***************************
-pip install pillow
 
 ****************migrations******
 python3 manage.py makemigrations
@@ -62,11 +62,11 @@ deactivate
 
 ************ Create System Socket File for Gunicorn *******
 
-Example:- sudo nano /etc/systemd/system/crenta.in.gunicorn.socket
+Example:-   nano /etc/systemd/system/crenta.in.gunicorn.socket
 
 cd  /etc/systemd/system/
 
-sudo nano map.com.gunicorn.socket
+  nano map.com.gunicorn.socket
 
 
 
@@ -81,12 +81,12 @@ WantedBy=sockets.target
 
 
 ************** Create System Service File for Gunicorn ******
-Syntax:- sudo nano /etc/systemd/system/your_domain.gunicorn.service
-Example:- sudo nano /etc/systemd/system/narayaniorder.com.gunicorn.service
+Syntax:-   nano /etc/systemd/system/your_domain.gunicorn.service
+Example:-   nano /etc/systemd/system/narayaniorder.com.gunicorn.service
 
 cd  /etc/systemd/system/
 
-sudo nano map.com.gunicorn.service
+  nano map.com.gunicorn.service
 
 
 [Unit]
@@ -102,34 +102,34 @@ ExecStart=/root/map/venv/bin/gunicorn \
           --access-logfile - \
           --workers 3 \
           --bind unix:/run/map.com.gunicorn.sock \
-          map.wsgi:application
+          randome_live_map.wsgi:application
 
 [Install]
 WantedBy=multi-user.target
 
 ----------------------------------------------------------------
-sudo systemctl start map.com.gunicorn.socket
+  systemctl start map.com.gunicorn.socket
 
-sudo systemctl start map.com.gunicorn.service
+  systemctl start map.com.gunicorn.service
 
 
 -----------------------------------------------------------------
 
-sudo systemctl enable map.com.gunicorn.socket
+  systemctl enable map.com.gunicorn.socket
 
-sudo systemctl enable map.com.gunicorn.service
+  systemctl enable map.com.gunicorn.service
 
 
 -----------------------------------------------------------------------
 
-sudo systemctl status map.com.gunicorn.socket
+  systemctl status map.com.gunicorn.socket
 
-sudo systemctl status map.com.gunicorn.service
+  systemctl status map.com.gunicorn.service
 
 -------------------------------------------
 
-sudo systemctl daemon-reload
-sudo systemctl restart map.com.gunicorn
+  systemctl daemon-reload
+  systemctl restart map.com.gunicorn
 
 
 
@@ -138,13 +138,13 @@ sudo systemctl restart map.com.gunicorn
 
 
 ****************** Create Virtual Host File ******
-Syntax:- sudo nano /etc/nginx/sites-available/your_domain
-Example:- sudo nano /etc/nginx/sites-available/crenta.in
+Syntax:-   nano /etc/nginx/sites-available/your_domain
+Example:-   nano /etc/nginx/sites-available/crenta.in
 
 
 cd /etc/nginx/sites-available
 
-sudo nano map.com
+  nano map.com
 
 
 
@@ -171,26 +171,29 @@ server{
 
 ########## Enable Virtual Host or Create Symbolic Link of Virtual Host File ########
 
-sudo ln -s /etc/nginx/sites-available/map.com /etc/nginx/sites-enabled/map.com
+  ln -s /etc/nginx/sites-available/map.com /etc/nginx/sites-enabled/map.com
 
 
 %%%%%%%%%%%%%%%%%%%%% Check Configuration is Correct or Not %%%%%
 
-sudo nginx -t
+  nginx -t
 
 %%%%%%%%%%%% Restart Nginx %%%%%%%%%
 
-sudo service nginx restart
+  service nginx restart
 
 
 ********** restart ******
 
-sudo systemctl daemon-reload
-sudo systemctl restart map.com.gunicorn
+  systemctl daemon-reload
+  systemctl restart map.com.gunicorn
 
 
 --------------------------------------- ssl ------------------
 
-sudo certbot --nginx
+  certbot --nginx
 
-sudo certbot --nginx -d janmanasnews.com -d www.janmanasnews.com
+  certbot --nginx -d janmanasnews.com -d www.janmanasnews.com
+
+
+  
