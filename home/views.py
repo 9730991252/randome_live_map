@@ -4,7 +4,22 @@ from kafka import KafkaConsumer, KafkaProducer
 import json
 
 def index(request):
-    return render(request, 'index.html')
+    LAT_LON_KAFKA_TOPIC = "self_lat_lon"
+    consumer = KafkaConsumer(
+        LAT_LON_KAFKA_TOPIC, 
+        bootstrap_servers="103.150.136.82:9092"
+    )
+    consumed_message = []
+    for m in consumer:
+        c = json.loads(m.value.decode())
+        consumed_message.append(c)
+        break
+    da = consumed_message[0]
+    context={
+        'latitude':da['latitude'],
+        'longitude':da['longitude']
+    }
+    return render(request, 'index.html',context)
 
 def delivery_boy(request):
     return render(request, 'delivery_boy.html')
