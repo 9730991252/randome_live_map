@@ -32,11 +32,10 @@
             (position) => {
                 latitude = position.coords.latitude
                 longitude = position.coords.longitude
-                if (latitude_last == latitude && longitude_last == longitude){
+
+                if (latitude_last !== latitude && longitude_last !== longitude){
                     latitude_last = latitude 
                     longitude_last = longitude 
-                }
-                else{
                     $.ajax({
                         url: "{% url 'produce_lat_lon' %}",
                         method: "GET",
@@ -45,8 +44,6 @@
                             lon:longitude
                         },
                         success: function(res){
-                            latitude_last = latitude 
-                            longitude_last = longitude 
                         }
                     })
                 }
