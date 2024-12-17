@@ -43,8 +43,6 @@ def data(request):
             consumed_message.append(c)
             break
         d = consumed_message[0]
-        producer = KafkaProducer(bootstrap_servers="103.150.136.82:9092")
-        producer.flush()
     return JsonResponse({'latitude': d['latitude'],'longitude':d['longitude']})
     
 

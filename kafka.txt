@@ -1,9 +1,6 @@
-103.150.136.82
 
-docker run -p 2181:2181 zookeeper
+~/kafka/bin/kafka-topics.sh --create --zookeeper 103.150.136.82:2181 --replication-factor 1 --topic TutorialTopic
 
-docker run -p 9092:9092 \
--e KAFKA_ZOOKEEPER_CONNECT=103.150.136.82:2181 \
--e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://103.150.136.82:9092 \
--e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 \
-confluentinc/cp-kafka
+echo "Hello, World" | ~/kafka/bin/kafka-console-producer.sh --broker-list 103.150.136.82:9092 --topic TutorialTopic > /dev/null
+
+~/kafka/bin/kafka-console-consumer.sh --bootstrap-server 103.150.136.82:9092 --topic TutorialTopic --from-beginning
